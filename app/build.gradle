@@ -1,0 +1,104 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+
+
+    signingConfigs {
+        config {
+            keyAlias 'CBao'
+            keyPassword '654321zlct'
+            storeFile file('E:/Android/CanBao.jks')
+            storePassword 'zlct123456'
+        }
+    }
+    lintOptions {
+        disable 'MissingTranslation'
+
+
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+
+    defaultConfig {
+        applicationId "com.example.tudou.mymusicss"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
+    }
+    dexOptions {
+        javaMaxHeapSize "4G"
+        preDexLibraries = false
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+    }
+}
+greendao {
+    schemaVersion 1  //版本
+    daoPackage 'com.example.tudou.mymusicss.base.greendao' // 一般为app包名+生成文件的文件夹名
+    targetGenDir 'src/main/java' //生成文件路径
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support:design:26.+'
+
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+
+    //retrofit
+    compile 'com.squareup.retrofit2:retrofit:2.4.0'
+    //Json转换的工具包
+    compile 'com.squareup.retrofit2:converter-gson:2.4.0'
+    //关联rejava Retrofit提供的CallAdapter
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    //解析为string
+    compile 'com.squareup.retrofit2:converter-scalars:2.4.0'
+    //okhttp
+    compile 'com.squareup.okhttp3:okhttp:3.10.0'
+    //日志拦截器
+    compile 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    //加rxandroid是因为rxjava中的线程问题。
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.9'
+
+
+    compile 'com.trello.rxlifecycle2:rxlifecycle:2.1.0'
+    compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
+
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+    compile 'org.greenrobot:greendao:3.2.2'
+
+    compile 'com.facebook.fresco:fresco:1.9.0'
+
+    compile 'com.android.support:multidex:1.0.1'
+ //日志上传
+    compile 'com.github.wenmingvs:LogReport:1.0.3'
+
+    compile project(path: ':empty')
+
+}

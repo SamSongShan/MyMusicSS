@@ -57,8 +57,7 @@ import static android.R.attr.versionName;
 
 public class MainActivity extends BaseActivity implements PermissionsUtil.CheckVersion, View.OnClickListener, OnStatusChildClickListener {
 
-    @BindView(R.id.ll)
-    LinearLayout ll;
+
 
     private DownloadDialog downloadDialog;
     private String filePath;
@@ -68,8 +67,6 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
     private boolean isExit = false;//退出标识
 
 
-    private RefreshLayout viewById;
-    private FrameLayout fgt;
     private int INSTALL_PACKAGES_REQUESTCODE = 121;
     private int GET_UNKNOWN_APP_SOURCES = 124;
     private FragmentManager fragmentManager;
@@ -83,23 +80,22 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
     @Override
     protected void init() {
 
-        viewById = (RefreshLayout) findViewById(R.id.refreshable_view);
-        fgt = (FrameLayout) findViewById(R.id.fgt);
+       /* viewById = (RefreshLayout) findViewById(R.id.refreshable_view);
         //延时1s执行
         this.viewById.setOnRefreshListener(new RefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                /*if (fragmentManager == null) {
+                *//*if (fragmentManager == null) {
                     fragmentManager = getSupportFragmentManager();
 
                 }
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.add(R.id.fgt, new HomeFragment(), "0");
-                transaction.commitAllowingStateLoss();*/
+                transaction.commitAllowingStateLoss();*//*
                 uploadeDo();
                 checkVersion();
             }
-        });
+        });*/
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PermissionsUtil.checkPermissions(this, this, 0, 1, 2, 3, 4, 5, 6, 7, 8);
 
@@ -108,8 +104,8 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
             uploadeDo();
 
         }
-        StatusLayoutManager statusLayoutManager = setupDefaultStatusLayoutManager(ll, null);
-        statusLayoutManager.showErrorLayout();
+        /*StatusLayoutManager statusLayoutManager = setupDefaultStatusLayoutManager(ll, null);
+        statusLayoutManager.showErrorLayout();*/
     }
 
 
@@ -119,7 +115,7 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
             public void onNext(String s) {
 
                 Log.e("登录111", "onNext: " + DesUtil.decrypt(s));
-                viewById.endRefresh();
+                //viewById.endRefresh();
                 // startActivity(new Intent(MainActivity.this,MainActivity.class));
                 // finish();
 
@@ -129,7 +125,7 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                viewById.endRefresh();
+
 
             }
 

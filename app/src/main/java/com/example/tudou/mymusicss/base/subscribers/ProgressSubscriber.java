@@ -208,6 +208,8 @@ public class ProgressSubscriber<T> extends DisposableObserver<T> implements Load
                     CookieResulte cookieResulte = CookieDbUtil.getInstance().queryCookieBy(s);
                     if (cookieResulte == null) {
                         Toast.makeText(context, "网络中断，也未获取缓存，请检查您的网络状态", Toast.LENGTH_SHORT).show();
+                        return;
+
                     }
                     long time = (System.currentTimeMillis() - cookieResulte.getTime()) / 1000;
                     if (time < (api == null ? apiString.getCookieNoNetWorkTime() : api.getCookieNoNetWorkTime())) {

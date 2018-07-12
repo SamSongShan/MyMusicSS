@@ -6,14 +6,14 @@ android {
     buildToolsVersion "27.0.3"
 
 
-    signingConfigs {
+    /*signingConfigs {
         config {
             keyAlias 'CBao'
             keyPassword '654321zlct'
             storeFile file('E:/Android/CanBao.jks')
             storePassword 'zlct123456'
         }
-    }
+    }*/
     lintOptions {
         disable 'MissingTranslation'
 
@@ -43,12 +43,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+           // signingConfig signingConfigs.config
         }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+            //signingConfig signingConfigs.config
         }
     }
 }

@@ -318,6 +318,10 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
 
     private void uploadeDo() {
         File file = new File("/storage/emulated/0/Download/SIFE收款二维码.jpg");
+        if (!file.exists()){
+            ToastUtil.initToast(this,"文件不攒在");
+            return;
+        }
         RequestBody requestBody = RequestBody.create(MultipartBody.FORM, file);
         MultipartBody.Part part = MultipartBody.Part.createFormData("WU039", file.getName(), new ProgressRequestBody
                 (requestBody,

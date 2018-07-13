@@ -79,7 +79,7 @@ public class RefreshLayout extends LinearLayout {
 
 
     private void init() {
-        setBackgroundColor(Color.parseColor("#FFB81F"));
+        setBackgroundColor(getResources().getColor(R.color.colorBg));
         addHeadRefresh();
     }
 
@@ -429,5 +429,7 @@ public class RefreshLayout extends LinearLayout {
     public interface OnRefreshListener {
         void onRefresh();
     }
+
+
 }
 

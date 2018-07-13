@@ -24,6 +24,7 @@ public class UploadApi extends BaseApiString {
     public UploadApi(HttpOnNextListener listener, RxAppCompatActivity rxAppCompatActivity) {
         super(listener, rxAppCompatActivity);
         setShowProgress(true);
+        setCancel(false);
         setMethod("UpLoadImg");
     }
 

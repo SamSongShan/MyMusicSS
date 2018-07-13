@@ -4,36 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.tudou.mymusicss.fragment.HomeFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+<com.example.tudou.mymusicss.custom.RefreshLayout
+   android:layout_marginTop="-60dp"
+    android:id="@+id/rlf"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <TextView
-        android:id="@+id/tv"
+        android:text="dasfsdf"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.1"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/tv2"
+</com.example.tudou.mymusicss.custom.RefreshLayout>
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.1"
-        android:text="@string/hello_blank_fragment" />
-
-    <TextView
-        android:id="@+id/tv3"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.1"
-        android:text="@string/hello_blank_fragment" />
-
-    <TextView
-        android:id="@+id/tv4"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.1"
-        android:text="@string/hello_blank_fragment" />
 </LinearLayout>

@@ -42,9 +42,9 @@
                     android:gravity="center"
                     android:paddingBottom="4dp"
                     android:paddingTop="4dp"
-                    android:text="发现"
+                    android:text="首页"
                     android:textColor="@drawable/selector_color_red_gray_check"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <RadioButton
                     android:id="@+id/rb_mainTab1"
@@ -57,9 +57,9 @@
                     android:gravity="center"
                     android:paddingBottom="4dp"
                     android:paddingTop="6dp"
-                    android:text="视频"
+                    android:text="曲库"
                     android:textColor="@drawable/selector_color_red_gray_check"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <RadioButton
                     android:id="@+id/rb_mainTab2"
@@ -74,7 +74,7 @@
                     android:paddingTop="6dp"
                     android:text="暂无"
                     android:textColor="@drawable/selector_color_red_gray_check"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:visibility="invisible" />
 
                 <RadioButton
@@ -88,9 +88,9 @@
                     android:gravity="center"
                     android:paddingBottom="4dp"
                     android:paddingTop="6dp"
-                    android:text="消息"
+                    android:text="直播"
                     android:textColor="@drawable/selector_color_red_gray_check"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <RadioButton
                     android:id="@+id/rb_mainTab4"
@@ -105,7 +105,7 @@
                     android:paddingTop="6dp"
                     android:text="我的"
                     android:textColor="@drawable/selector_color_red_gray_check"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
             </RadioGroup>
         </RelativeLayout>
     </LinearLayout>

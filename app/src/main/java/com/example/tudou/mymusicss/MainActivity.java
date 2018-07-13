@@ -8,16 +8,19 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.Settings;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.tudou.mymusicss.api.UploadApi;
@@ -33,6 +36,7 @@ import com.example.tudou.mymusicss.base.listener.upload.UploadProgressListener;
 import com.example.tudou.mymusicss.base.subscribers.ProgressSubscriber;
 import com.example.tudou.mymusicss.custom.DownloadDialog;
 import com.example.tudou.mymusicss.custom.RefreshLayout;
+import com.example.tudou.mymusicss.fragment.HomeFragment;
 import com.example.tudou.mymusicss.utils.DesUtil;
 import com.example.tudou.mymusicss.utils.LogUtils;
 import com.example.tudou.mymusicss.utils.PermissionsUtil;
@@ -55,9 +59,10 @@ import okhttp3.RequestBody;
 import static android.R.attr.versionName;
 
 
-public class MainActivity extends BaseActivity implements PermissionsUtil.CheckVersion, View.OnClickListener, OnStatusChildClickListener {
+public class MainActivity extends BaseActivity implements PermissionsUtil.CheckVersion, View.OnClickListener, OnStatusChildClickListener, RadioGroup.OnCheckedChangeListener {
 
-
+    @BindView(R.id.rg_mainTab)
+    public RadioGroup radioGroup;
 
     private DownloadDialog downloadDialog;
     private String filePath;
@@ -70,6 +75,8 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
     private int INSTALL_PACKAGES_REQUESTCODE = 121;
     private int GET_UNKNOWN_APP_SOURCES = 124;
     private FragmentManager fragmentManager;
+    private HomeFragment homeFragment;
+    private int page;//要启动的Fragment的页数
 
     @Override
     protected int getViewResId() {
@@ -79,31 +86,18 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void init() {
+        radioGroup.setOnCheckedChangeListener(this);
+        radioGroup.getChildAt(0).performClick();
 
-       /* viewById = (RefreshLayout) findViewById(R.id.refreshable_view);
-        //延时1s执行
-        this.viewById.setOnRefreshListener(new RefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                *//*if (fragmentManager == null) {
-                    fragmentManager = getSupportFragmentManager();
-
-                }
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.add(R.id.fgt, new HomeFragment(), "0");
-                transaction.commitAllowingStateLoss();*//*
-                uploadeDo();
-                checkVersion();
-            }
-        });*/
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PermissionsUtil.checkPermissions(this, this, 0, 1, 2, 3, 4, 5, 6, 7, 8);
 
         } else {
             checkVersion();
-            uploadeDo();
+            //uploadeDo();
 
         }
+        //设置空白页
         /*StatusLayoutManager statusLayoutManager = setupDefaultStatusLayoutManager(ll, null);
         statusLayoutManager.showErrorLayout();*/
     }
@@ -318,8 +312,8 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
 
     private void uploadeDo() {
         File file = new File("/storage/emulated/0/Download/SIFE收款二维码.jpg");
-        if (!file.exists()){
-            ToastUtil.initToast(this,"文件不攒在");
+        if (!file.exists()) {
+            ToastUtil.initToast(this, "文件不攒在");
             return;
         }
         RequestBody requestBody = RequestBody.create(MultipartBody.FORM, file);
@@ -399,4 +393,57 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
     public void onCustomerChildClick(View view) {
 
     }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+        //获取管理器
+        if (fragmentManager == null) {
+            fragmentManager = getSupportFragmentManager();
+
+        }//获取事务
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        //先隐藏全部
+        hideFragments(transaction);
+        switch (checkedId) {
+            case R.id.rb_mainTab0://发现
+                page = 0;
+                if (homeFragment == null) {
+                    homeFragment = new HomeFragment();
+                    transaction.add(R.id.fl_main, homeFragment, "0");
+                } else {
+                    transaction.show(homeFragment);
+                    //findFragment.onRefresh();//强制进入刷新
+                }
+                break;
+            case R.id.rb_mainTab1://视频
+                page = 1;
+
+                break;
+            case R.id.rb_mainTab2://暂无展位用
+
+
+                break;
+
+            case R.id.rb_mainTab3://消息
+                page = 3;
+
+                break;
+            case R.id.rb_mainTab4://我的
+                page = 4;
+
+                break;
+        }
+        transaction.commitAllowingStateLoss();
+    }
+
+    /**
+     * 先隐藏所有Fragment
+     */
+    private void hideFragments(FragmentTransaction transaction) {
+        if (homeFragment != null) {
+            transaction.hide(homeFragment);
+        }
+
+    }
+
 }

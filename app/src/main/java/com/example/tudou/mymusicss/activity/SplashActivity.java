@@ -4,11 +4,13 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
@@ -35,6 +37,8 @@ public class SplashActivity extends BaseActivity {
     private TextView[] ts;
 
     private View container;
+
+    private boolean isStop = false;
 
 
     @Override
@@ -70,7 +74,7 @@ public class SplashActivity extends BaseActivity {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    if (!isCancel) {
+                    if (!isCancel && !isStop) {
                         stp.showFillColorText();
                         startFinalAnim();
                         /*startActivity(new Intent(SplashActivity.this, MainActivity.class));
@@ -80,7 +84,6 @@ public class SplashActivity extends BaseActivity {
                 }
             });
         } else {
-
             ts = new TextView[]{
                     (TextView) findViewById(R.id.splash_m),
                     (TextView) findViewById(R.id.splash_u),
@@ -167,7 +170,10 @@ public class SplashActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        startMainActivity();
+                        if (!isStop) {
+                            startMainActivity();
+                        }
+
                     }
                 });
             }
@@ -215,5 +221,24 @@ public class SplashActivity extends BaseActivity {
     private void startMainActivity() {
         startActivity(new Intent(this, MainActivity.class));
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            isStop = true;
+            ActivityStackManager.getManager().exitApp(this);
+            return true;//return true;拦截事件传递,从而屏蔽back键。
+        }
+        if (KeyEvent.KEYCODE_HOME == keyCode) {
+            isStop = true;
+            ActivityStackManager.getManager().exitApp(this);            return true;//同理
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -19,17 +19,20 @@ import retrofit2.Retrofit;
 public class VersionPostApi extends BaseApiString {
 
     private boolean all;
+    private Login json;
 
-    public VersionPostApi(HttpOnNextListener listener, RxAppCompatActivity rxAppCompatActivity) {
+    public VersionPostApi(String method, Login json, HttpOnNextListener listener, RxAppCompatActivity rxAppCompatActivity) {
         super(listener, rxAppCompatActivity);
+        this.json = json;
 
 
         setShowProgress(true);
         setCancel(true);
         setCache(false);
-        setMethod("AddSignIn");
+        setMethod(method);
         setCookieNetWorkTime(60);
         setCookieNoNetWorkTime(24 * 60 * 60);
+
     }
 
 
@@ -45,7 +48,7 @@ public class VersionPostApi extends BaseApiString {
     public Observable getObservable(Retrofit retrofit) {
         HttpPostService service = retrofit.create(HttpPostService.class);
         Gson gson = new GsonBuilder().create();
-        String mobile = gson.toJson(new Login("Mobile", "13632840502", "123456"));
+        String mobile = gson.toJson(json);
 
         return service.getAllVedioBy(DesUtil.encrypt(mobile));
     }

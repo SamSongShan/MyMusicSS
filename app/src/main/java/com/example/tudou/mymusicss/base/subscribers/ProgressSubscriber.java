@@ -27,7 +27,6 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
-
 /**
  * 用于在Http请求开始时，自动显示一个ProgressDialog
  * 在Http请求结束是，关闭ProgressDialog
@@ -141,13 +140,13 @@ public class ProgressSubscriber<T> extends DisposableObserver<T> implements Load
         /*缓存并且有网*/
         if (api == null ? apiString.isCache() && AppUtil.isNetworkAvailable(RxRetrofitApp.getApplication())
                 : api.isCache() && AppUtil.isNetworkAvailable(RxRetrofitApp.getApplication())) {
-             /*获取缓存数据*/
+            /*获取缓存数据*/
             CookieResulte cookieResulte = CookieDbUtil.getInstance().queryCookieBy(api == null ? apiString.getUrl() : api.getUrl());
             if (cookieResulte != null) {
                 long time = (System.currentTimeMillis() - cookieResulte.getTime()) / 1000;
                 if (time < (api == null ? apiString.getCookieNetWorkTime() : api.getCookieNetWorkTime())) {
                     if (mSubscriberOnNextListener != null) {
-                        mSubscriberOnNextListener.onCacheNext(cookieResulte.getResulte());
+                        mSubscriberOnNextListener.onCacheNext(api == null ?apiString.getMethod():api.getMethod(),cookieResulte.getResulte());
                     }
                     onComplete();
                     if (!isDisposed()) {
@@ -183,13 +182,13 @@ public class ProgressSubscriber<T> extends DisposableObserver<T> implements Load
             Observable.just(url).subscribe(new Observer<String>() {
                 @Override
                 public void onComplete() {
-                    Log.e(api==null?apiString.getUrl():api.getUrl(), "onComplete: ");
+                    Log.e(api == null ? apiString.getUrl() : api.getUrl(), "onComplete: ");
 
                 }
 
                 @Override
                 public void onError(Throwable e) {
-                    Log.e(api==null?apiString.getUrl():api.getUrl(), "onError: ");
+                    Log.e(api == null ? apiString.getUrl() : api.getUrl(), "onError: ");
 
                     errorDo(e);
                 }
@@ -209,12 +208,11 @@ public class ProgressSubscriber<T> extends DisposableObserver<T> implements Load
                     if (cookieResulte == null) {
                         Toast.makeText(context, "网络中断，也未获取缓存，请检查您的网络状态", Toast.LENGTH_SHORT).show();
                         return;
-
                     }
                     long time = (System.currentTimeMillis() - cookieResulte.getTime()) / 1000;
                     if (time < (api == null ? apiString.getCookieNoNetWorkTime() : api.getCookieNoNetWorkTime())) {
                         if (mSubscriberOnNextListener != null) {
-                            mSubscriberOnNextListener.onCacheNext(cookieResulte.getResulte());
+                            mSubscriberOnNextListener.onCacheNext(api == null ?apiString.getMethod():api.getMethod(),cookieResulte.getResulte());
                         }
                     } else {
                         CookieDbUtil.getInstance().deleteCookie(cookieResulte);
@@ -239,7 +237,7 @@ public class ProgressSubscriber<T> extends DisposableObserver<T> implements Load
             Toast.makeText(context, "错误" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         if (mSubscriberOnNextListener != null) {
-            mSubscriberOnNextListener.onError(e);
+            mSubscriberOnNextListener.onError(api == null ?apiString.getMethod():api.getMethod(),e);
         }
     }
 
@@ -253,7 +251,7 @@ public class ProgressSubscriber<T> extends DisposableObserver<T> implements Load
     public void onNext(T t) {
 
         if (mSubscriberOnNextListener != null) {
-            mSubscriberOnNextListener.onNext(t);
+            mSubscriberOnNextListener.onNext(api == null ?apiString.getMethod():api.getMethod(),t);
         }
 
     }
@@ -290,7 +288,7 @@ public class ProgressSubscriber<T> extends DisposableObserver<T> implements Load
     @Override
     public void onCancel() {
         if (mSubscriberOnNextListener != null) {
-            mSubscriberOnNextListener.onCancel();
+            mSubscriberOnNextListener.onCancel(api == null ?apiString.getMethod():api.getMethod());
         }
         onCancelProgress();
     }

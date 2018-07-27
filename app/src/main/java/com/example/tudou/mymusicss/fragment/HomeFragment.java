@@ -15,6 +15,7 @@ import com.example.tudou.mymusicss.base.http.HttpManager;
 import com.example.tudou.mymusicss.base.listener.HttpOnNextListener;
 import com.example.tudou.mymusicss.base.subscribers.ProgressSubscriber;
 import com.example.tudou.mymusicss.custom.RefreshLayout;
+import com.example.tudou.mymusicss.model.Login;
 import com.example.tudou.mymusicss.utils.DesUtil;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
@@ -55,7 +56,7 @@ public class HomeFragment extends BaseFragment implements RefreshLayout.OnRefres
     private void checkVersion() {
         HttpOnNextListener httpOnNextListener = new HttpOnNextListener<String>() {
             @Override
-            public void onNext(String s) {
+            public void onNext(String method,String s) {
 
                 Log.e("登录111", "onNext: " + DesUtil.decrypt(s));
                 rlf.endRefresh();
@@ -65,8 +66,8 @@ public class HomeFragment extends BaseFragment implements RefreshLayout.OnRefres
             }
 
             @Override
-            public void onError(Throwable e) {
-                super.onError(e);
+            public void onError(String method,Throwable e) {
+                super.onError(method,e);
 
 
             }
@@ -74,7 +75,7 @@ public class HomeFragment extends BaseFragment implements RefreshLayout.OnRefres
         };
 
         HttpManager instance = HttpManager.getInstance();
-        ProgressSubscriber progressSubscriber = instance.doHttpDealString(new VersionPostApi(httpOnNextListener, (RxAppCompatActivity) getActivity()), "加载中" + 111);
+        ProgressSubscriber progressSubscriber = instance.doHttpDealString(new VersionPostApi("AddSignIn",new Login("Mobile", "13632840502", "123456"),httpOnNextListener, (RxAppCompatActivity) getActivity()), "加载中" + 111);
 
 
 

@@ -111,7 +111,7 @@ public class HttpManager {
         /*rx处理*/
         ProgressSubscriber subscriber = new ProgressSubscriber(basePar, hint);
         Observable observable = basePar.getObservable(retrofit)
-                 /*失败后的retry配置*/
+                /*失败后的retry配置*/
                 .retryWhen(new RetryWhenNetworkException(basePar.getRetryCount(),
                         basePar.getRetryDelay(), basePar.getRetryIncreaseDelay()))
                 /*生命周期管理*/
@@ -129,7 +129,7 @@ public class HttpManager {
         /*链接式对象返回*/
         HttpOnNextListener httpOnNextListener = basePar.getListener();
         if (httpOnNextListener != null ) {
-            httpOnNextListener.onNext(observable);
+            httpOnNextListener.onNext(basePar.getMethod(),observable);
         }
 
         /*数据回调*/
@@ -155,11 +155,11 @@ public class HttpManager {
 
         {
             builder.addInterceptor(getHttpLoggingInterceptor());
-             //builder.addInterceptor(new LoggingInterceptor());
+            //builder.addInterceptor(new LoggingInterceptor());
         }
 
 
-                                      /*创建retrofit对象*/
+        /*创建retrofit对象*/
         Retrofit retrofit = new Retrofit.Builder()
                 .client(builder.build())
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -168,10 +168,10 @@ public class HttpManager {
                 .build();
 
 
-                                      /*rx处理*/
+        /*rx处理*/
         ProgressSubscriber subscriber = new ProgressSubscriber(basePar, hint);
         Observable observable = basePar.getObservable(retrofit)
-                 /*失败后的retry配置*/
+                /*失败后的retry配置*/
                 .retryWhen(new RetryWhenNetworkException(basePar.getRetryCount(),
                         basePar.getRetryDelay(), basePar.getRetryIncreaseDelay()))
                 /*生命周期管理*/
@@ -186,12 +186,12 @@ public class HttpManager {
                 .map(basePar);
 
 
-                                      /*链接式对象返回*/
+        /*链接式对象返回*/
         HttpOnNextListener httpOnNextListener = basePar.getListener();
         if (httpOnNextListener != null )
 
         {
-            httpOnNextListener.onNext(observable);
+            httpOnNextListener.onNext(basePar.getMethod(),observable);
         }
 
         /*数据回调*/
@@ -199,7 +199,7 @@ public class HttpManager {
 
         return subscriber;
     }
-  /*  *//**
+    /*  *//**
      * 处理https请求
      *
      * @param basePar 封装的请求数据
@@ -527,4 +527,6 @@ class LoggingInterceptor implements Interceptor {
     }
 
 }
+
+
 

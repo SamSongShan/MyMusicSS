@@ -37,6 +37,7 @@ import com.example.tudou.mymusicss.base.subscribers.ProgressSubscriber;
 import com.example.tudou.mymusicss.custom.DownloadDialog;
 import com.example.tudou.mymusicss.custom.RefreshLayout;
 import com.example.tudou.mymusicss.fragment.HomeFragment;
+import com.example.tudou.mymusicss.model.Login;
 import com.example.tudou.mymusicss.utils.DesUtil;
 import com.example.tudou.mymusicss.utils.LogUtils;
 import com.example.tudou.mymusicss.utils.PermissionsUtil;
@@ -91,9 +92,11 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PermissionsUtil.checkPermissions(this, this, 0, 1, 2, 3, 4, 5, 6, 7, 8);
-
+            downLoadApp();
+            // uploadeDo();
         } else {
             checkVersion();
+            downLoadApp();
             //uploadeDo();
 
         }
@@ -106,7 +109,7 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
     private void checkVersion() {
         HttpOnNextListener httpOnNextListener = new HttpOnNextListener<String>() {
             @Override
-            public void onNext(String s) {
+            public void onNext(String method,String s) {
 
                 Log.e("登录111", "onNext: " + DesUtil.decrypt(s));
                 //viewById.endRefresh();
@@ -117,8 +120,8 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
             }
 
             @Override
-            public void onError(Throwable e) {
-                super.onError(e);
+            public void onError(String method,Throwable e) {
+                super.onError(method,e);
 
 
             }
@@ -126,7 +129,7 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
         };
 
         HttpManager instance = HttpManager.getInstance();
-        ProgressSubscriber progressSubscriber = instance.doHttpDealString(new VersionPostApi(httpOnNextListener, MainActivity.this), "加载中" + 111);
+        ProgressSubscriber progressSubscriber = instance.doHttpDealString(new VersionPostApi("AddSignIn",new Login("Mobile", "13632840502", "123456"),httpOnNextListener, MainActivity.this), "加载中" + 111);
 
 
         // downLoadApp();
@@ -146,7 +149,7 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
                 "_" + versionName + ".apk";
         Log.e("loge", "Download: " + filePath);
 
-        DownInfo downInfo = new DownInfo("http://www.hfhlife.com/Resource/version/az.apk");
+        DownInfo downInfo = new DownInfo("https://download.jetbrains.8686c.com/idea/ideaIU-2018.1.6.exe");
         downInfo.setId(0);
         downInfo.setSavePath(filePath);
         downInfo.setUpdateProgress(true);
@@ -313,7 +316,7 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
     private void uploadeDo() {
         File file = new File("/storage/emulated/0/Download/SIFE收款二维码.jpg");
         if (!file.exists()) {
-            ToastUtil.initToast(this, "文件不攒在");
+            ToastUtil.initToast(this, "文件不存在");
             return;
         }
         RequestBody requestBody = RequestBody.create(MultipartBody.FORM, file);
@@ -365,14 +368,14 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
      */
     HttpOnNextListener httpOnNextListener = new HttpOnNextListener<String>() {
         @Override
-        public void onNext(String o) {
+        public void onNext(String method,String o) {
 
             LogUtils.e("上传回调onNext", DesUtil.decrypt(o));
         }
 
         @Override
-        public void onError(Throwable e) {
-            super.onError(e);
+        public void onError(String method,Throwable e) {
+            super.onError( method,e);
             LogUtils.e("上传回调onError", e.getMessage());
 
         }

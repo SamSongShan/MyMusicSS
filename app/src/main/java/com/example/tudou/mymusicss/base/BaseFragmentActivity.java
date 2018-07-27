@@ -1,6 +1,7 @@
 package com.example.tudou.mymusicss.base;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -36,12 +37,15 @@ public abstract class BaseFragmentActivity extends RxFragmentActivity {
         if (mListener != null) {
             mListener.onCreate(savedInstanceState);
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            StatusBarUtils.setStatusBarLightMode(this, R.color.colorWhite);
 
-        }
         ActivityStackManager.getManager().addActivity(this);
         setContentView(getContentViewId());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+            StatusBarUtils.setStatusBarLightMode(this, Color.WHITE);
+
+        }
         mContext = this;
         unBinder = ButterKnife.bind(this);
 

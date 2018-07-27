@@ -3,6 +3,8 @@
     <color name="colorPrimary">#1FA5FF</color><!--—导航栏颜色-->
     <color name="colorPrimaryDark">#ffffff</color><!--通知栏颜色-->
     <color name="colorAccent">#1FA5FF</color><!--控件选中后颜色-->
+    <color name="colorTheme">#fff</color>
+
 
 
     <color name="colorWhite">#fff</color>

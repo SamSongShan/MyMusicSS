@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/FillToolbar"
     android:id="@+id/toolbar_text"
+    style="@style/FillToolbar"
     android:layout_width="match_parent"
-    android:layout_height="44dp"
-    android:background="@color/colorAccent">
+    android:layout_height="66dp"
+    android:background="@color/colorAccent"
+    android:paddingTop="22dp">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ImageButton
             android:id="@+id/toolbar_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:padding="12dp"
+            android:background="@null"
             android:gravity="center_vertical"
-            android:src="@drawable/toolbar_back"
-            android:background="@null"/>
+            android:padding="12dp"
+            android:src="@drawable/toolbar_back" />
+
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
@@ -23,27 +27,29 @@
             android:layout_centerInParent="true"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
-            android:maxLines="1"
             android:ellipsize="end"
-            android:textSize="20sp"
-            android:textColor="@color/colorWhite"/>
+            android:maxLines="1"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
+
         <TextView
             android:id="@+id/toolbar_next"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:padding="10dp"
-            android:gravity="center_vertical"
             android:layout_alignParentRight="true"
-            android:visibility="gone"
-            android:textSize="16sp"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:padding="10dp"
             android:textColor="@color/colorWhite"
-            android:clickable="true"/>
+            android:textSize="16sp"
+            android:visibility="gone" />
+
         <View
-            android:visibility="gone"
             android:id="@+id/Line_view"
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorLightGray" />
+            android:background="@color/colorLightGray"
+            android:visibility="gone" />
     </RelativeLayout>
 </android.support.v7.widget.Toolbar>

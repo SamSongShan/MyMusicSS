@@ -92,11 +92,9 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PermissionsUtil.checkPermissions(this, this, 0, 1, 2, 3, 4, 5, 6, 7, 8);
-            downLoadApp();
             // uploadeDo();
         } else {
             checkVersion();
-            downLoadApp();
             //uploadeDo();
 
         }
@@ -149,7 +147,7 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
                 "_" + versionName + ".apk";
         Log.e("loge", "Download: " + filePath);
 
-        DownInfo downInfo = new DownInfo("https://download.jetbrains.8686c.com/idea/ideaIU-2018.1.6.exe");
+        DownInfo downInfo = new DownInfo("");
         downInfo.setId(0);
         downInfo.setSavePath(filePath);
         downInfo.setUpdateProgress(true);

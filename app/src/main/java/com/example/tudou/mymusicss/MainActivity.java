@@ -37,6 +37,7 @@ import com.example.tudou.mymusicss.base.subscribers.ProgressSubscriber;
 import com.example.tudou.mymusicss.custom.DownloadDialog;
 import com.example.tudou.mymusicss.custom.RefreshLayout;
 import com.example.tudou.mymusicss.fragment.HomeFragment;
+import com.example.tudou.mymusicss.fragment.MineFragment;
 import com.example.tudou.mymusicss.model.Login;
 import com.example.tudou.mymusicss.utils.DesUtil;
 import com.example.tudou.mymusicss.utils.LogUtils;
@@ -78,6 +79,7 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
     private FragmentManager fragmentManager;
     private HomeFragment homeFragment;
     private int page;//要启动的Fragment的页数
+    private MineFragment mineFragment;
 
     @Override
     protected int getViewResId() {
@@ -107,7 +109,7 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
     private void checkVersion() {
         HttpOnNextListener httpOnNextListener = new HttpOnNextListener<String>() {
             @Override
-            public void onNext(String method,String s) {
+            public void onNext(String method, String s) {
 
                 Log.e("登录111", "onNext: " + DesUtil.decrypt(s));
                 //viewById.endRefresh();
@@ -118,8 +120,8 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
             }
 
             @Override
-            public void onError(String method,Throwable e) {
-                super.onError(method,e);
+            public void onError(String method, Throwable e) {
+                super.onError(method, e);
 
 
             }
@@ -127,7 +129,7 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
         };
 
         HttpManager instance = HttpManager.getInstance();
-        ProgressSubscriber progressSubscriber = instance.doHttpDealString(new VersionPostApi("AddSignIn",new Login("Mobile", "13632840502", "123456"),httpOnNextListener, MainActivity.this), "加载中" + 111);
+        ProgressSubscriber progressSubscriber = instance.doHttpDealString(new VersionPostApi("AddSignIn", new Login("Mobile", "13632840502", "123456"), httpOnNextListener, MainActivity.this), "加载中" + 111);
 
 
         // downLoadApp();
@@ -366,14 +368,14 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
      */
     HttpOnNextListener httpOnNextListener = new HttpOnNextListener<String>() {
         @Override
-        public void onNext(String method,String o) {
+        public void onNext(String method, String o) {
 
             LogUtils.e("上传回调onNext", DesUtil.decrypt(o));
         }
 
         @Override
-        public void onError(String method,Throwable e) {
-            super.onError( method,e);
+        public void onError(String method, Throwable e) {
+            super.onError(method, e);
             LogUtils.e("上传回调onError", e.getMessage());
 
         }
@@ -431,6 +433,13 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
                 break;
             case R.id.rb_mainTab4://我的
                 page = 4;
+                if (mineFragment == null) {
+                    mineFragment = new MineFragment();
+                    transaction.add(R.id.fl_main, mineFragment, "4");
+                } else {
+                    transaction.show(mineFragment);
+                    //findFragment.onRefresh();//强制进入刷新
+                }
 
                 break;
         }
@@ -444,6 +453,10 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
         if (homeFragment != null) {
             transaction.hide(homeFragment);
         }
+        if (mineFragment != null) {
+            transaction.hide(mineFragment);
+        }
+
 
     }
 

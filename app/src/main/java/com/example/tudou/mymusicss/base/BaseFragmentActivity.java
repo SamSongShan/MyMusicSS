@@ -1,6 +1,7 @@
 package com.example.tudou.mymusicss.base;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,8 +41,9 @@ public abstract class BaseFragmentActivity extends RxFragmentActivity {
 
         ActivityStackManager.getManager().addActivity(this);
         setContentView(getContentViewId());
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//手机竖屏
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
             StatusBarUtils.setStatusBarLightMode(this, Color.WHITE);
 

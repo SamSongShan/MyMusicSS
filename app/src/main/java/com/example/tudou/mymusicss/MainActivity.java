@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.tudou.mymusicss.activity.DemoActivity;
 import com.example.tudou.mymusicss.api.UploadApi;
 import com.example.tudou.mymusicss.api.VersionPostApi;
 import com.example.tudou.mymusicss.base.BaseActivity;
@@ -58,6 +59,7 @@ import me.bakumon.statuslayoutmanager.library.StatusLayoutManager;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
+import static android.R.attr.thickness;
 import static android.R.attr.versionName;
 
 
@@ -432,6 +434,7 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
 
                 break;
             case R.id.rb_mainTab4://我的
+                startActivity(new Intent(this,DemoActivity.class));
                 page = 4;
                 if (mineFragment == null) {
                     mineFragment = new MineFragment();

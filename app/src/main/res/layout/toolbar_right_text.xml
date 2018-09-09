@@ -3,10 +3,8 @@
     android:id="@+id/toolbar_text"
     style="@style/FillToolbar"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:layout_marginTop="@dimen/tool_bar_top_margin"
-    android:background="@color/colorAccent"
-    android:paddingTop="@dimen/tool_bar_top_padding">
+    android:layout_height="44dp"
+    android:background="@color/colorAccent">
 
     <RelativeLayout
         android:layout_width="match_parent"

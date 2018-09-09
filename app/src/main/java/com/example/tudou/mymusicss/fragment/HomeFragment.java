@@ -68,7 +68,7 @@ public class HomeFragment extends BaseFragment implements RefreshLayout.OnRefres
             @Override
             public void onError(String method,Throwable e) {
                 super.onError(method,e);
-
+                rlf.endRefresh();
 
             }
 

@@ -70,6 +70,7 @@ public class HomeFragment extends BaseFragment implements RefreshLayout.OnRefres
                 super.onError(method,e);
                 rlf.endRefresh();
 
+
             }
 
         };

@@ -30,9 +30,11 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.concurrent.TimeUnit;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
@@ -91,8 +93,15 @@ public class HttpManager {
         this.hint = hint;
         //手动创建一个OkHttpClient并设置超时时间缓存等设置
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(basePar.getConnectionTime(), TimeUnit.SECONDS);
-        builder.addInterceptor(new CookieInterceptor(basePar.isCache(), basePar.getUrl()));
+        builder.connectTimeout(basePar.getConnectionTime(), TimeUnit.SECONDS)
+                .addInterceptor(new CookieInterceptor(basePar.isCache(), basePar.getUrl()))
+                .sslSocketFactory(HttpsUtils.getSslSocketFactory(null, null, null))//创建一个证书对象
+                .hostnameVerifier(new HostnameVerifier() {
+                    @Override
+                    public boolean verify(String s, SSLSession sslSession) {
+                        return true;
+                    }
+                });//校验名称,这个对象就是信任所有的主机,也就是信任所有https的请求
         if (RxRetrofitApp.isDebug()) {
 
             builder.addInterceptor(getHttpLoggingInterceptor());
@@ -148,7 +157,14 @@ public class HttpManager {
         //手动创建一个OkHttpClient并设置超时时间缓存等设置
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(basePar.getConnectionTime(), TimeUnit.SECONDS)
-                .addInterceptor(new CookieInterceptor(basePar.isCache(), basePar.getUrl()));
+                .addInterceptor(new CookieInterceptor(basePar.isCache(), basePar.getUrl()))
+                .sslSocketFactory(HttpsUtils.getSslSocketFactory(null, null, null))//创建一个证书对象
+                .hostnameVerifier(new HostnameVerifier() {
+                    @Override
+                    public boolean verify(String s, SSLSession sslSession) {
+                        return true;
+                    }
+                });//校验名称,这个对象就是信任所有的主机,也就是信任所有https的请求
 
 
         if (RxRetrofitApp.isDebug())

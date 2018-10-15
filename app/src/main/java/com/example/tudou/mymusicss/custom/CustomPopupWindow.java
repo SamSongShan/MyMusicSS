@@ -32,7 +32,7 @@ public class CustomPopupWindow {
         mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         mPopupWindow.setAnimationStyle(builder.animstyle);
-
+        mPopupWindow.setOnDismissListener(builder.onDismissListener);
 
     }
 
@@ -134,6 +134,10 @@ public class CustomPopupWindow {
         view.setOnFocusChangeListener(listener);
     }
 
+    public PopupWindow getPopupWindow() {
+        return mPopupWindow;
+    }
+
 
     /**
      * builder 类
@@ -146,9 +150,17 @@ public class CustomPopupWindow {
         private boolean outsidecancel;
         private int animstyle;
         private Context context;
+        private Activity activity;
+        private PopupWindow.OnDismissListener onDismissListener;
+
 
         public Builder setContext(Context context) {
             this.context = context;
+            return this;
+        }
+
+        public Builder setOnDismissListener(PopupWindow.OnDismissListener onDismissListener) {
+            this.onDismissListener = onDismissListener;
             return this;
         }
 
@@ -180,6 +192,11 @@ public class CustomPopupWindow {
 
         public Builder setAnimationStyle(int animstyle) {
             this.animstyle = animstyle;
+            return this;
+        }
+
+        public Builder setActivity(Activity activity) {
+            this.activity = activity;
             return this;
         }
 

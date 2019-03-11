@@ -42,7 +42,7 @@
                     android:gravity="center"
                     android:paddingBottom="4dp"
                     android:paddingTop="4dp"
-                    android:text="首页"
+                    android:text="@string/home_page"
                     android:textColor="@drawable/selector_color_red_gray_check"
                     android:textSize="12sp" />
 
@@ -57,7 +57,7 @@
                     android:gravity="center"
                     android:paddingBottom="4dp"
                     android:paddingTop="6dp"
-                    android:text="曲库"
+                    android:text="@string/music_library"
                     android:textColor="@drawable/selector_color_red_gray_check"
                     android:textSize="12sp" />
 
@@ -88,7 +88,7 @@
                     android:gravity="center"
                     android:paddingBottom="4dp"
                     android:paddingTop="6dp"
-                    android:text="直播"
+                    android:text="@string/live"
                     android:textColor="@drawable/selector_color_red_gray_check"
                     android:textSize="12sp" />
 
@@ -103,7 +103,7 @@
                     android:gravity="center"
                     android:paddingBottom="4dp"
                     android:paddingTop="6dp"
-                    android:text="我的"
+                    android:text="@string/mine"
                     android:textColor="@drawable/selector_color_red_gray_check"
                     android:textSize="12sp" />
             </RadioGroup>

@@ -12,19 +12,13 @@
         android:layout_height="match_parent"
         android:layout_marginTop="-60dp">
 
-        <android.support.design.widget.CoordinatorLayout
+        <!-- TODO: Update blank fragment layout -->
+        <TextView
+
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <android.support.design.widget.AppBarLayout
-                android:id="@+id/activity_main_app_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                app:elevation="0dp">
+            android:layout_height="match_parent"
+            android:text="home" />
 
-            </android.support.design.widget.AppBarLayout>
-
-        </android.support.design.widget.CoordinatorLayout>
 
 
     </com.example.tudou.mymusicss.custom.RefreshLayout>

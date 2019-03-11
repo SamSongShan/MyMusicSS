@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 首页
  */
 public class HomeFragment extends BaseFragment implements RefreshLayout.OnRefreshListener {
 
@@ -35,7 +35,10 @@ public class HomeFragment extends BaseFragment implements RefreshLayout.OnRefres
     public HomeFragment() {
         // Required empty public constructor
     }
-
+    public static HomeFragment instance() {
+        HomeFragment homeFragment = new HomeFragment();
+        return homeFragment;
+    }
 
     @Override
     protected int getViewResId() {

@@ -38,7 +38,9 @@ import com.example.tudou.mymusicss.base.subscribers.ProgressSubscriber;
 import com.example.tudou.mymusicss.custom.DownloadDialog;
 import com.example.tudou.mymusicss.custom.RefreshLayout;
 import com.example.tudou.mymusicss.fragment.HomeFragment;
+import com.example.tudou.mymusicss.fragment.LiveFragment;
 import com.example.tudou.mymusicss.fragment.MineFragment;
+import com.example.tudou.mymusicss.fragment.MisicLibFragment;
 import com.example.tudou.mymusicss.model.Login;
 import com.example.tudou.mymusicss.utils.DesUtil;
 import com.example.tudou.mymusicss.utils.LogUtils;
@@ -82,6 +84,8 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
     private HomeFragment homeFragment;
     private int page;//要启动的Fragment的页数
     private MineFragment mineFragment;
+    private LiveFragment liveFragment;
+    private MisicLibFragment misicLibFragment;
 
     @Override
     protected int getViewResId() {
@@ -410,18 +414,25 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
         //先隐藏全部
         hideFragments(transaction);
         switch (checkedId) {
-            case R.id.rb_mainTab0://发现
+            case R.id.rb_mainTab0://首页
                 page = 0;
                 if (homeFragment == null) {
-                    homeFragment = new HomeFragment();
+                    homeFragment = HomeFragment.instance();
                     transaction.add(R.id.fl_main, homeFragment, "0");
                 } else {
                     transaction.show(homeFragment);
                     //findFragment.onRefresh();//强制进入刷新
                 }
                 break;
-            case R.id.rb_mainTab1://视频
+            case R.id.rb_mainTab1://曲库
                 page = 1;
+                if (misicLibFragment == null) {
+                    misicLibFragment = MisicLibFragment.instance();
+                    transaction.add(R.id.fl_main, misicLibFragment, "1");
+                } else {
+                    transaction.show(misicLibFragment);
+                }
+
 
                 break;
             case R.id.rb_mainTab2://暂无展位用
@@ -429,15 +440,20 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
 
                 break;
 
-            case R.id.rb_mainTab3://消息
+            case R.id.rb_mainTab3://直播
                 page = 3;
+                if (liveFragment == null) {
+                    liveFragment = LiveFragment.instance();
+                    transaction.add(R.id.fl_main, liveFragment, "3");
+                } else {
+                    transaction.show(liveFragment);
+                }
 
                 break;
             case R.id.rb_mainTab4://我的
-                startActivity(new Intent(this,DemoActivity.class));
                 page = 4;
                 if (mineFragment == null) {
-                    mineFragment = new MineFragment();
+                    mineFragment =  MineFragment.instance();
                     transaction.add(R.id.fl_main, mineFragment, "4");
                 } else {
                     transaction.show(mineFragment);
@@ -458,6 +474,11 @@ public class MainActivity extends BaseActivity implements PermissionsUtil.CheckV
         }
         if (mineFragment != null) {
             transaction.hide(mineFragment);
+        }
+        if (liveFragment != null) {
+            transaction.hide(liveFragment);
+        } if (misicLibFragment != null) {
+            transaction.hide(misicLibFragment);
         }
 
 
